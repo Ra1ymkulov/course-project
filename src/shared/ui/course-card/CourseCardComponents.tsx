@@ -10,7 +10,7 @@ const CourseCardComponents = ({ item }: any) => {
       ) : (
         <img
           className="w-82 h-75 object-cover rounded-t-md"
-          src="/skeleton-image.webp"
+          src="/images/skeleton-image.webp"
         />
       )}
       <div className="w-82 rounded-b-md shadow-lg p-5 flex flex-col gap-3">
