@@ -1,5 +1,5 @@
 import HomePage from "@/src/pages/home/HomePage";
 
-const Home = () => <HomePage />;
+const page = () => <HomePage />;
 
-export default Home;
+export default page;
