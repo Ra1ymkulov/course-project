@@ -59,3 +59,9 @@ nav {
     font-weight: 500;
   }
 }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
