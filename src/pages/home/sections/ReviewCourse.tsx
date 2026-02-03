@@ -4,7 +4,7 @@ const ReviewCourse = () => {
   const data = [
     {
       id: 1,
-      avatar: "/images.jpeg",
+      avatar: "/images/images.jpeg",
       name: "Yessica Christy",
       location: "Shanxi, China",
       review: 4.7,
@@ -13,7 +13,7 @@ const ReviewCourse = () => {
     },
     {
       id: 2,
-      avatar: "/images.jpeg",
+      avatar: "/images/images.jpeg",
       name: "Yessica Christy",
       location: "Shanxi, China",
       review: 4.7,
@@ -22,7 +22,7 @@ const ReviewCourse = () => {
     },
     {
       id: 3,
-      avatar: "/images.jpeg",
+      avatar: "/images/images.jpeg",
       name: "Yessica Christy",
       location: "Shanxi, China",
       review: 4.7,
@@ -31,7 +31,7 @@ const ReviewCourse = () => {
     },
     {
       id: 4,
-      avatar: "/images.jpeg",
+      avatar: "/images/images.jpeg",
       name: "Yessica Christy",
       location: "Shanxi, China",
       review: 4.7,
@@ -40,7 +40,7 @@ const ReviewCourse = () => {
     },
     {
       id: 5,
-      avatar: "/images.jpeg",
+      avatar: "/images/images.jpeg",
       name: "Yessica Christy",
       location: "Shanxi, China",
       review: 4.7,
@@ -62,7 +62,7 @@ const ReviewCourse = () => {
             </p>
           </div>
           <div className="flex items-center gap-10 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-12 slider-card-review">
+            <div className="flex items-center gap-12">
               {data.map((item) => (
                 <ReviewCardComponents item={item} key={item.id} />
               ))}

@@ -4,7 +4,7 @@ const AvailableCourses = () => {
   const dataCourse = [
     {
       id: 1,
-      image: "/product-cover-76.svg",
+      image: "/images/product-cover-76.svg",
       name: "Как ставить о оценивать задачи",
       description:
         "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
@@ -15,7 +15,7 @@ const AvailableCourses = () => {
     },
     {
       id: 12,
-      image: "/product-cover-76.svg",
+      image: "/images/product-cover-76.svg",
       name: "Как ставить о оценивать задачи",
       description:
         "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
@@ -26,7 +26,7 @@ const AvailableCourses = () => {
     },
     {
       id: 13,
-      image: "/product-cover-76.svg",
+      image: "/images/product-cover-76.svg",
       name: "Как ставить о оценивать задачи",
       description:
         "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
