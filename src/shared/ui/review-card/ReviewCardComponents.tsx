@@ -1,9 +1,11 @@
+"use client";
+
 import { FaStar } from "react-icons/fa";
 import { FaUserAlt } from "react-icons/fa";
 
 const ReviewCardComponents = ({ item }: any) => {
   return (
-    <div className="border border-gray-500 p-6 flex flex-col gap-3 rounded-lg">
+    <div className="w-100 h-57 border border-gray-500 p-6 flex flex-col gap-3 rounded-lg">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           {item.avatar ? (
