@@ -12,7 +12,7 @@ const Header = () => {
           <nav>
             <p onClick={() => router.push("/")}>Главная</p>
             <p onClick={() => router.push("/about-us")}>О нас</p>
-            <p>Курсы</p>
+            <p onClick={() => router.push("/course")}>Курсы</p>
             <p>Контакты</p>
           </nav>
           <div className="flex items-center gap-2.5">
