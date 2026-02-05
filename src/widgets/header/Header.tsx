@@ -4,7 +4,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 
 const Header = () => {
   const router = useRouter();
-  let isAuth = false;
+  let isAuth = true;
   return isAuth ? (
     <header className="py-5">
       <div className="container">

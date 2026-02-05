@@ -61,6 +61,7 @@ nav {
 }
 .auth {
   @apply w-full h-full flex items-center;
+}
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
