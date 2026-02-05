@@ -11,8 +11,8 @@ const Header = () => {
         <div className="flex items-center justify-between gap-4">
           <h4>Logo</h4>
           <nav>
-            <p>Главная</p>
-            <p>О нас</p>
+            <p onClick={() => router.push("/")}>Главная</p>
+            <p onClick={() => router.push("/about-us")}>О нас</p>
             <p>Курсы</p>
             <p>Контакты</p>
           </nav>

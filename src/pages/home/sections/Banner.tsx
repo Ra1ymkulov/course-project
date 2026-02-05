@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 
 const Banner = () => {
@@ -9,7 +10,7 @@ const Banner = () => {
             <h1 className="font-xl text-3xl font-bold">
               Надо много учиться, чтобы знать хоть немного.
             </h1>
-            <p className="">
+            <p>
               Обеспечьте сеть для всех ваших потребностей легко и весело,
               используя наши курсы.Откройте для себя интересные функции от нас.
             </p>

@@ -59,7 +59,11 @@ nav {
     font-weight: 500;
   }
 }
-
 .auth {
   @apply w-full h-full flex items-center;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
 }
