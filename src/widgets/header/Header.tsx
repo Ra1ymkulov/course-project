@@ -4,7 +4,8 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 
 const Header = () => {
   const router = useRouter();
-  return (
+  let isAuth = false;
+  return isAuth ? (
     <header className="py-5">
       <div className="container">
         <div className="flex items-center justify-between gap-4">
@@ -17,7 +18,13 @@ const Header = () => {
           </nav>
           <div className="flex items-center gap-2.5">
             <button className="py-2.5 px-5 font-medium text-base">Войти</button>
-            <button className="button flex items-center gap-2.5">
+            <button
+              onClick={() => {
+                router.push("/auth/login");
+                isAuth = true;
+              }}
+              className="button flex items-center gap-2.5"
+            >
               Присоединяйся
               <IoIosArrowRoundForward className="text-xl" />
             </button>
@@ -25,6 +32,8 @@ const Header = () => {
         </div>
       </div>
     </header>
+  ) : (
+    ""
   );
 };
 
