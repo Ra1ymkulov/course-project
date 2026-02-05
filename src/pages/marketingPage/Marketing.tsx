@@ -170,8 +170,11 @@ const Marketing = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-10">
       <Banner course={course} />
+      {0 ? (
+        <button className="button w-full max-w-80">Купить курс</button>
+      ) : null}
       <Lessons course={course} />
     </div>
   );

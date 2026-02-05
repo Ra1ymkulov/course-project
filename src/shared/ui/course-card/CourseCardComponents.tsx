@@ -3,8 +3,10 @@ import { IoTimeOutline } from "react-icons/io5";
 import { FiBook } from "react-icons/fi";
 import { BsGraphUp } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
+import {useRouter} from "next/navigation"
 
 const CourseCardComponents = ({ item }: any) => {
+  const router = useRouter()
   return (
     <div className="flex flex-col w-82 relative">
       {item.image ? (
@@ -35,7 +37,7 @@ const CourseCardComponents = ({ item }: any) => {
             <span>{item.progress}</span>
           </div>
         </div>
-        <button className="flex items-center justify-center text-[#23A6F0] w-48 h-11 border border-[#23A6F0] rounded-2xl">
+        <button className="flex items-center justify-center text-[#23A6F0] w-48 h-11 border border-[#23A6F0] rounded-2xl" onClick={() => router.push("/marketing")}>
           Узнать больше
           <IoIosArrowForward className="text-lg" />
         </button>

@@ -13,7 +13,7 @@ const Lessons: FC<IProps> = ({ course }) => {
   const [currentItem, setCurrentItem] = useState(0);
 
   return (
-    <section className="py-20">
+    <section className="py-20 w-full">
       <div className="container">
         <div className="">
           {course.work.map((item: any, idx: number) => (
