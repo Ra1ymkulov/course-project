@@ -1,11 +1,12 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 const Header = () => {
+  const pathname = usePathname();
   const router = useRouter();
-  let isAuth = true;
-  return isAuth ? (
+  const hideHeader = pathname?.startsWith("/auth");
+  return !hideHeader ? (
     <header className="py-5">
       <div className="container">
         <div className="flex items-center justify-between gap-4">
@@ -21,7 +22,6 @@ const Header = () => {
             <button
               onClick={() => {
                 router.push("/auth/login");
-                isAuth = true;
               }}
               className="button flex items-center gap-2.5"
             >
