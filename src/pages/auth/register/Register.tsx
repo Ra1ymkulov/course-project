@@ -1,9 +1,23 @@
 "use client";
+import { useState } from "react";
+import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useGoogleLoginApi } from "@/src/features/google/api";
+import { useRegisterApi } from "@/src/features/register/api";
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 
 const Register = () => {
   const router = useRouter();
+  const { mutate: registerFunc } = useRegisterApi();
+  const googleLoginMutation = useGoogleLoginApi();
+  const [agree, setAgree] = useState(false);
+
   const {
     handleSubmit,
     register,
@@ -11,10 +25,12 @@ const Register = () => {
     reset,
     setError,
   } = useForm();
-  const onSubmit = (inputValues: any) => {
+
+  const onSubmit = async (inputValues: any) => {
     try {
+      await registerFunc(inputValues);
       reset();
-      router.push("/");
+      // router.push("/");
     } catch (error: any) {
       const message = error.message?.toLowerCase() || "";
       if (message.includes("пользователь")) {
@@ -35,21 +51,58 @@ const Register = () => {
       }
     }
   };
+
+  const handleGoogleLoad = () => {
+    if (!window.google) return;
+    try {
+      window.google.accounts.id.initialize({
+        client_id:
+          "1011957134529-39qds19hh2ua0505nnggk02kuockiv3e.apps.googleusercontent.com",
+        callback: async (response: { credential: string }) => {
+          googleLoginMutation.mutate({ id_token: response.credential });
+        },
+      });
+    } catch (error) {
+      console.error("Google initialization error:", error);
+    }
+  };
+
+  const handleGoogleClick = () => {
+    if (window.google) {
+      window.google.accounts.id.prompt((notification: any) => {
+        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+          window.google.accounts.id.renderButton(
+            document.getElementById("googleSignInButton"),
+            { theme: "outline", size: "large", width: "100%" },
+          );
+        }
+      });
+    }
+  };
+
   return (
     <div className="auth flex flex-col gap-3">
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        strategy="afterInteractive"
+        onLoad={handleGoogleLoad}
+      />
+
       <div className="w-full flex justify-end py-5 pr-20 border-b-[0.8px] border-solid border-black/40">
         <button
-          className="bg-none text-[#23A6F0] "
+          className="bg-none text-[#23A6F0]"
           onClick={() => router.push("/auth/login")}
         >
           Войти
         </button>
       </div>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="px-10 flex flex-col items-center justify-center gap-7 mx-auto w-full max-w-130"
+        className="p-10 flex flex-col items-center justify-center gap-7 mx-auto w-full max-w-130"
       >
         <h1 className="text-3xl font-bold">Регистрация</h1>
+
         {errors.name ? (
           <span className="text-red-500 text-xs font-semibold -mb-5 self-start">
             {`${errors.name.message}`}
@@ -58,13 +111,14 @@ const Register = () => {
           <span className="text-xs -mb-5 font-semibold self-start">Имя</span>
         )}
         <input
-          {...register("name", {
-            required: "Имя обязательно!",
-          })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
+          {...register("name", { required: "Имя обязательно!" })}
+          className={`text-sm  font-medium w-full p-2 py-3 bg-none border-[0.8px] rounded border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.name ? "border-red-500" : ""
+          }`}
           type="text"
           placeholder="Введите свое имя"
         />
+
         {errors.email ? (
           <span className="text-red-500 text-xs font-semibold -mb-5 self-start">
             {`${errors.email.message}`}
@@ -75,15 +129,15 @@ const Register = () => {
         <input
           {...register("email", {
             required: "Email обязателен!",
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Неправильный email",
-            },
+            pattern: { value: /\S+@\S+\.\S+/, message: "Неправильный email" },
           })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
+          className={`text-sm  font-medium w-full p-2 py-3 bg-none border-[0.8px] rounded border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.email ? "border-red-500" : ""
+          }`}
           type="text"
           placeholder="Введите свою почту"
         />
+
         {errors.password ? (
           <span className="text-red-500 text-xs font-semibold -mb-5 self-start">
             {`${errors.password.message}`}
@@ -94,32 +148,57 @@ const Register = () => {
         <input
           {...register("password", {
             required: "Пароль обязателен!",
-            minLength: {
-              value: 6,
-              message: "Минимальная длина пароля 6 символов",
-            },
+            minLength: { value: 6, message: "Минимальная длина 6 символов" },
           })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
-          type="text"
+          className={`text-sm  font-medium w-full p-2 py-3 bg-none border-[0.8px] rounded border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.password ? "border-red-500" : ""
+          }`}
+          type="password"
           placeholder="Пароль"
         />
+
         <span className="mr-auto text-black -mt-3 text-xs font-semibold flex gap-2">
-          <input type="checkbox" />
-          Согласен с Условиями
+          <input
+            type="checkbox"
+            {...register("agree", {
+              required: "Вы должны согласиться с условиями!",
+            })}
+            onChange={(e) => setAgree(e.target.checked)}
+          />
+          {errors.agree ? (
+            <span className="text-red-500 text-xs font-semibold">
+              {`${errors.agree.message}`}
+            </span>
+          ) : (
+            "Согласен с Условиями "
+          )}
         </span>
-        <button type="submit" className="button w-full">
+
+        <button
+          disabled={!agree}
+          type="submit"
+          className={`button w-full ${!agree ? "opacity-50 cursor-not-allowed" : ""}`}
+        >
           Регистрация
         </button>
+
         <p className="w-[70%] flex items-center gap-5">
           <span className="flex-1 h-0.5 bg-[#348bca9f]"></span>Или
           <span className="flex-1 h-0.5 bg-[#348BCA9f]"></span>
         </p>
+
         <div className="flex w-full gap-5">
-          <button className="flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-medium">
+          <button
+            id="googleSignInButton"
+            type="button"
+            onClick={handleGoogleClick}
+            className="text-sm border- flex justify-center items-center gap-3 flex-1 shadow-[0_0_3px_#348BCA] font-normal"
+          >
             <img className="h-5" src="/images/icon (1).svg" alt="" />
             Google
           </button>
-          <button className="flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-medium">
+
+          <button className="text-sm flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-normal">
             <img className="h-5" src="/images/icon (2).svg" alt="" />
             Facebook
           </button>

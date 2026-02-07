@@ -1,10 +1,22 @@
 "use client";
+import { useGoogleLoginApi } from "@/src/features/google/api";
+import { useLoginApi } from "@/src/features/login/api";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 const Login = () => {
   const router = useRouter();
+  const { mutateAsync: loginFunc } = useLoginApi();
+  const googleLoginMutation = useGoogleLoginApi();
+
   const {
     handleSubmit,
     register,
@@ -12,10 +24,10 @@ const Login = () => {
     reset,
     setError,
   } = useForm();
-  const onSubmit = (inputValues: any) => {
+  const onSubmit = async (inputValues: any) => {
     try {
+      await loginFunc(inputValues);
       reset();
-      router.push("/");
     } catch (error: any) {
       const message = error.message?.toLowerCase() || "";
       if (message.includes("пользователь")) {
@@ -35,7 +47,28 @@ const Login = () => {
         });
       }
     }
+    router.push("/");
   };
+
+  useEffect(() => {
+    if (!window.google) return;
+    try {
+      window.google.accounts.id.initialize({
+        client_id:
+          "1011957134529-39qds19hh2ua0505nnggk02kuockiv3e.apps.googleusercontent.com",
+        callback: async (response: { credential: string }) => {
+          googleLoginMutation.mutate({ id_token: response.credential });
+          // router.push("/");
+        },
+      });
+
+      window.google.accounts.id.renderButton(
+        document.getElementById("googleSignIn")!,
+        { theme: "outline", size: "large", width: "100%" },
+      );
+    } catch (error) {}
+  }, [googleLoginMutation]);
+
   return (
     <div className="auth gap-10">
       <img
@@ -103,11 +136,11 @@ const Login = () => {
           <span className="flex-1 h-0.5 bg-[#348BCA9f]"></span>
         </p>
         <div className="flex w-full gap-5">
-          <button className="flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-medium">
-            <img className="h-5" src="/images/icon (1).svg" alt="" />
-            Google
-          </button>
-          <button className="flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-medium">
+          <div
+            id="googleSignIn"
+            className="flex-1 shadow-[0_0_3px_#348BCA] rounded-lg"
+          ></div>
+          <button className="text-sm flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-normal">
             <img className="h-5" src="/images/icon (2).svg" alt="" />
             Facebook
           </button>

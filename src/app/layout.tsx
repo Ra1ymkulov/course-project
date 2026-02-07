@@ -3,6 +3,8 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "../widgets/header/Header";
 import Footer from "../widgets/footer/Footer";
+import Script from "next/script";
+import ReactQueryProviders from "./providers/ReactQueryProviders";
 
 const montserrat = Montserrat();
 
@@ -20,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className}`}>
         <div className="layout">
-          <Header />
-          {children}
-          <Footer />
+          <ReactQueryProviders>
+            <Header />
+            {children}
+            <Footer />
+          </ReactQueryProviders>
         </div>
       </body>
     </html>
