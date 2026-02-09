@@ -8,11 +8,11 @@ export const useGoogleLoginApi = () => {
   return useMutation<USERLOGIN.GetUserRes, Error, GoogleLoginReq>({
     mutationFn: async ({ id_token }) => {
       try {
+        console.log(id_token);
         const response = await USER_API.post<USERLOGIN.GetUserRes>(
           "/google-login",
           { id_token },
         );
-        console.log(id_token);
         console.log(response);
 
         localStorage.setItem("user", JSON.stringify(response.data.token));

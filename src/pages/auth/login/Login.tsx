@@ -2,7 +2,7 @@
 import { useGoogleLoginApi } from "@/src/features/google/api";
 import { useLoginApi } from "@/src/features/login/api";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
 
@@ -15,7 +15,8 @@ declare global {
 const Login = () => {
   const router = useRouter();
   const { mutateAsync: loginFunc } = useLoginApi();
-  const googleLoginMutation = useGoogleLoginApi();
+  const { mutate: googleLoginMutation } = useGoogleLoginApi();
+  const googleButtonRef = useRef<HTMLDivElement>(null);
 
   const {
     handleSubmit,
@@ -50,25 +51,31 @@ const Login = () => {
     router.push("/");
   };
 
-  useEffect(() => {
-    if (!window.google) return;
+  const handleGoogleSignIn = (response: any) => {
     try {
+      if (response.credential) {
+        googleLoginMutation({ id_token: response.credential });
+      }
+      alert("Регистрация прошла успешно! Теперь вы можете войти в систему.");
+    } catch (error) {
+      alert("Произошла ошибка при регистрации. Пожалуйста, попробуйте позже.");
+    }
+  };
+
+  useEffect(() => {
+    if (window.google && googleButtonRef.current) {
       window.google.accounts.id.initialize({
         client_id:
           "1011957134529-39qds19hh2ua0505nnggk02kuockiv3e.apps.googleusercontent.com",
-        callback: async (response: { credential: string }) => {
-          googleLoginMutation.mutate({ id_token: response.credential });
-          // router.push("/");
-        },
+        callback: handleGoogleSignIn,
       });
-
-      window.google.accounts.id.renderButton(
-        document.getElementById("googleSignIn")!,
-        { theme: "outline", size: "large", width: "100%" },
-      );
-    } catch (error) {}
-  }, [googleLoginMutation]);
-
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: "outline",
+        size: "large",
+        width: "100%",
+      });
+    }
+  }, [handleGoogleSignIn]);
   return (
     <div className="auth gap-10">
       <img
@@ -136,10 +143,8 @@ const Login = () => {
           <span className="flex-1 h-0.5 bg-[#348BCA9f]"></span>
         </p>
         <div className="flex w-full gap-5">
-          <div
-            id="googleSignIn"
-            className="flex-1 shadow-[0_0_3px_#348BCA] rounded-lg"
-          ></div>
+          <div ref={googleButtonRef} className="flex-1"></div>
+
           <button className="text-sm flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-normal">
             <img className="h-5" src="/images/icon (2).svg" alt="" />
             Facebook

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -14,9 +14,10 @@ declare global {
 
 const Register = () => {
   const router = useRouter();
+  const { mutate: googleLoginMutation } = useGoogleLoginApi();
   const { mutate: registerFunc } = useRegisterApi();
-  const googleLoginMutation = useGoogleLoginApi();
   const [agree, setAgree] = useState(false);
+  const googleButtonRef = useRef<HTMLDivElement>(null);
 
   const {
     handleSubmit,
@@ -25,6 +26,32 @@ const Register = () => {
     reset,
     setError,
   } = useForm();
+
+  const handleGoogleSignIn = (response: any) => {
+    try {
+      if (response.credential) {
+        googleLoginMutation({ id_token: response.credential });
+      }
+      alert("Регистрация прошла успешно! Теперь вы можете войти в систему.");
+    } catch (error) {
+      alert("Произошла ошибка при регистрации. Пожалуйста, попробуйте позже.");
+    }
+  };
+
+  useEffect(() => {
+    if (window.google && googleButtonRef.current) {
+      window.google.accounts.id.initialize({
+        client_id:
+          "1011957134529-39qds19hh2ua0505nnggk02kuockiv3e.apps.googleusercontent.com",
+        callback: handleGoogleSignIn,
+      });
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        theme: "outline",
+        size: "large",
+        width: "100%",
+      });
+    }
+  }, [handleGoogleSignIn]);
 
   const onSubmit = async (inputValues: any) => {
     try {
@@ -52,42 +79,8 @@ const Register = () => {
     }
   };
 
-  const handleGoogleLoad = () => {
-    if (!window.google) return;
-    try {
-      window.google.accounts.id.initialize({
-        client_id:
-          "1011957134529-39qds19hh2ua0505nnggk02kuockiv3e.apps.googleusercontent.com",
-        callback: async (response: { credential: string }) => {
-          googleLoginMutation.mutate({ id_token: response.credential });
-        },
-      });
-    } catch (error) {
-      console.error("Google initialization error:", error);
-    }
-  };
-
-  const handleGoogleClick = () => {
-    if (window.google) {
-      window.google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          window.google.accounts.id.renderButton(
-            document.getElementById("googleSignInButton"),
-            { theme: "outline", size: "large", width: "100%" },
-          );
-        }
-      });
-    }
-  };
-
   return (
     <div className="auth flex flex-col gap-3">
-      <Script
-        src="https://accounts.google.com/gsi/client"
-        strategy="afterInteractive"
-        onLoad={handleGoogleLoad}
-      />
-
       <div className="w-full flex justify-end py-5 pr-20 border-b-[0.8px] border-solid border-black/40">
         <button
           className="bg-none text-[#23A6F0]"
@@ -188,15 +181,7 @@ const Register = () => {
         </p>
 
         <div className="flex w-full gap-5">
-          <button
-            id="googleSignInButton"
-            type="button"
-            onClick={handleGoogleClick}
-            className="text-sm border- flex justify-center items-center gap-3 flex-1 shadow-[0_0_3px_#348BCA] font-normal"
-          >
-            <img className="h-5" src="/images/icon (1).svg" alt="" />
-            Google
-          </button>
+          <div ref={googleButtonRef} className="flex-1"></div>
 
           <button className="text-sm flex justify-center items-center gap-3 flex-1 py-2 rounded-lg shadow-[0_0_3px_#348BCA] font-normal">
             <img className="h-5" src="/images/icon (2).svg" alt="" />
@@ -204,6 +189,11 @@ const Register = () => {
           </button>
         </div>
       </form>
+
+      <Script
+        src="https://accounts.google.com/gsi/client"
+        strategy="afterInteractive"
+      />
     </div>
   );
 };
