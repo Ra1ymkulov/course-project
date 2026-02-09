@@ -1,8 +1,10 @@
 "use client";
+import { useRegisterApi } from "@/src/features/auth/register";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-const Register = () => {
+export const Register = () => {
+  const { mutateAsync: registerFunc } = useRegisterApi();
   const router = useRouter();
   const {
     handleSubmit,
@@ -13,6 +15,12 @@ const Register = () => {
   } = useForm();
   const onSubmit = (inputValues: any) => {
     try {
+      const data: USERREGISTER.GetUserReq = {
+        name: inputValues.name,
+        email: inputValues.email,
+        password: inputValues.password,
+      };
+      registerFunc(data);
       reset();
       router.push("/");
     } catch (error: any) {
@@ -61,7 +69,11 @@ const Register = () => {
           {...register("name", {
             required: "Имя обязательно!",
           })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
+          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.email
+              ? "border-red-500 focus:border-red-500 placeholder:text-red-500"
+              : ""
+          }`}
           type="text"
           placeholder="Введите свое имя"
         />
@@ -80,7 +92,11 @@ const Register = () => {
               message: "Неправильный email",
             },
           })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
+          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.email
+              ? "border-red-500 focus:border-red-500 placeholder:text-red-500"
+              : ""
+          }`}
           type="text"
           placeholder="Введите свою почту"
         />
@@ -99,7 +115,11 @@ const Register = () => {
               message: "Минимальная длина пароля 6 символов",
             },
           })}
-          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500 placeholder:text-red-500" : ""}`}
+          className={`w-full p-2 bg-none border-[0.8px] rounded border-solid border-black/40 outline-none focus:border-black/70 transition-all ${
+            errors.email
+              ? "border-red-500 focus:border-red-500 placeholder:text-red-500"
+              : ""
+          }`}
           type="text"
           placeholder="Пароль"
         />
@@ -128,5 +148,3 @@ const Register = () => {
     </div>
   );
 };
-
-export default Register;

@@ -3,6 +3,9 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "../widgets/header/Header";
 import Footer from "../widgets/footer/Footer";
+import ReactQueryProviders from "./providers/ReactQueryProviders";
+import { UserProvider } from "./providers/UserProviders";
+import { useGetUserQuery } from "../entities/user/api/useApi";
 
 const montserrat = Montserrat();
 
@@ -19,11 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className}`}>
-        <div className="layout">
-          <Header />
-          {children}
-          <Footer />
-        </div>
+        <ReactQueryProviders>
+          <UserProvider>
+            <div className="layout">
+              <Header />
+              {children}
+              <Footer />
+            </div>
+          </UserProvider>
+        </ReactQueryProviders>
       </body>
     </html>
   );

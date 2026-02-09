@@ -2,8 +2,10 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { FiX } from "react-icons/fi";
+import { useLoginApi } from "../api/loginApi";
 
-const Login = () => {
+export const Login = () => {
+  const { mutateAsync: login } = useLoginApi();
   const router = useRouter();
   const {
     handleSubmit,
@@ -12,8 +14,9 @@ const Login = () => {
     reset,
     setError,
   } = useForm();
-  const onSubmit = (inputValues: any) => {
+  const onSubmit = async (inputValues: any) => {
     try {
+      await login(inputValues);
       reset();
       router.push("/");
     } catch (error: any) {
@@ -65,7 +68,9 @@ const Login = () => {
               message: "Неправильный email",
             },
           })}
-          className={`w-full py-1 bg-none border-b-[1.5px] border-solid border-black/30 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500" : ""}`}
+          className={`w-full py-1 bg-none border-b-[1.5px] border-solid border-black/30 outline-none focus:border-black/70 transition-all ${
+            errors.email ? "border-red-500 focus:border-red-500" : ""
+          }`}
           type="text"
           placeholder="Почта"
         />
@@ -82,7 +87,9 @@ const Login = () => {
               message: "Минимальная длина пароля 6 символов",
             },
           })}
-          className={`w-full py-1 bg-none border-b-[1.5px] border-solid border-black/30 outline-none focus:border-black/70 transition-all ${errors.email ? "border-red-500 focus:border-red-500" : ""}`}
+          className={`w-full py-1 bg-none border-b-[1.5px] border-solid border-black/30 outline-none focus:border-black/70 transition-all ${
+            errors.email ? "border-red-500 focus:border-red-500" : ""
+          }`}
           type="text"
           placeholder="Пароль"
         />
@@ -116,5 +123,3 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;

@@ -3,8 +3,9 @@ import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const pathname = usePathname();
-  const hideHeader = pathname?.startsWith("/auth");
-  return !hideHeader ? (
+  const hideFooter =
+    pathname?.startsWith("/auth") || pathname?.startsWith("/user");
+  return !hideFooter ? (
     <footer className="pt-10">
       <div className="flex flex-col ">
         <div className="flex flex-col text-center gap-2.5 items-center relative pb-20">
