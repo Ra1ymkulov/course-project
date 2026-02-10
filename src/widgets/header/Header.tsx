@@ -9,9 +9,12 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const hideHeader = pathname?.startsWith("/auth");
+  const userPathname = pathname?.startsWith("/user");
   const { data: user } = useGetUserQuery();
+  console.log(user);
+
   return !hideHeader ? (
-    <header className={`${user ? "" : ""} py-5`}>
+    <header className={`${userPathname && "border-b border-gray-500"} py-5`}>
       <div className="container">
         {user ? (
           <div className="flex items-center justify-between gap-4">
@@ -33,7 +36,10 @@ const Header = () => {
                   alt=""
                 />
               ) : (
-                <div className="w-10 h-10 rounded-sm border border-gray-500 flex items-center justify-center">
+                <div
+                  onClick={() => router.push("/user")}
+                  className="w-10 h-10 rounded-sm border border-gray-500 flex items-center justify-center"
+                >
                   <FaRegUser className="text-[18px] text-gray-500" />
                 </div>
               )}
