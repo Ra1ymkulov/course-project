@@ -1,5 +1,21 @@
+"use client";
+
+import { useCourseStore } from "@/src/entities/course/model/coursestore";
+import { useGetUserQuery } from "@/src/entities/user/api/useApi";
+import { useUserStore } from "@/src/entities/user/model/userstore";
+
 const ChatPage = () => {
-  return <div>ChatPage</div>;
+  const { data: userQuery } = useGetUserQuery();
+  const user = useUserStore((state) => state.user);
+  const course = useCourseStore((state) => state.course);
+
+  return (
+    <div>
+      ChatPage
+      <div>{userQuery?.name}</div>
+      <div className="text-red-500">{user?.name}</div>
+    </div>
+  );
 };
 
 export default ChatPage;

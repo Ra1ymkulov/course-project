@@ -8,8 +8,11 @@ interface User {
   role: UserRole;
   country: string;
   notifications: Notifications[];
+  course: Course[];
+  comments: Comments[];
+  favoriteCourse: FavoriteCourse[];
 }
 enum UserRole {
-  ADMIN = "ADMIN",
-  CLIENT = "CLIENT",
+  OWNER = "OWNER",
+  STUDENT = "STUDENT",
 }

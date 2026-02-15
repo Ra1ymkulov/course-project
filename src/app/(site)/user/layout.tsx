@@ -5,9 +5,9 @@ import React from "react";
 const LayoutSideBar = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="container">
-      <div className="flex">
+      <div className="grid grid-cols-[200px_1080px] min-h-screen">
         <SideBar />
-        {children}
+        <div className="w-full">{children}</div>
       </div>
     </div>
   );

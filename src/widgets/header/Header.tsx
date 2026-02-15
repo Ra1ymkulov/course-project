@@ -11,7 +11,6 @@ const Header = () => {
   const hideHeader = pathname?.startsWith("/auth");
   const userPathname = pathname?.startsWith("/user");
   const { data: user } = useGetUserQuery();
-  console.log(user);
 
   return !hideHeader ? (
     <header className={`${userPathname && "border-b border-gray-500"} py-5`}>
