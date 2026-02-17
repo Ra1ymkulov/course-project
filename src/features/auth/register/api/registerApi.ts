@@ -1,4 +1,4 @@
-import { USER_API } from "@/src/shared/api/user";
+import { USER_API } from "@/src/shared/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useRegisterApi = () => {

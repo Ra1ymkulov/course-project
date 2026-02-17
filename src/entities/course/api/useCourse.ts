@@ -1,5 +1,5 @@
 "use client";
-import { USER_API } from "@/src/shared/api/user";
+import { USER_API } from "@/src/shared/api";
 import { useQuery } from "@tanstack/react-query";
 
 const useGetAllCoursesQuery = () => {

@@ -14,6 +14,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (user) setUser(user);
   }, [user]);
+
   useEffect(() => {
     if (course) setCourse(course);
   }, [course]);
