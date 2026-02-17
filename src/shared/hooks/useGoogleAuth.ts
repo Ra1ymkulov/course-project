@@ -1,6 +1,6 @@
 "use client";
 
-import { googleLogin } from "../api/user";
+import { googleLogin } from "../api";
 import { useMutation } from "@tanstack/react-query";
 
 interface GoogleAuthResponse {
