@@ -28,7 +28,6 @@ const ChatPageUser = () => {
   }, [setChats]);
   useEffect(() => {
     if (!socket || !selectedChat) return;
-
     socket.emit("joinRoom", selectedChat.id);
   }, [socket, selectedChat]);
   const handleSendMessage = () => {
@@ -39,6 +38,7 @@ const ChatPageUser = () => {
     });
     setMessageText("");
   };
+
   const handleCreateChat = async () => {
     if (!newChatTitle || !newChatUsers) return;
 
@@ -112,6 +112,14 @@ const ChatPageUser = () => {
                     (el) => el.user.id !== user?.id && el.user.name
                   )}
                 </p>
+                {selectedChat?.messages && (
+                  <p className="text-xs">
+                    {
+                      selectedChat.messages[selectedChat.messages.length - 1]
+                        .text
+                    }
+                  </p>
+                )}
               </div>
             </div>
           ))
