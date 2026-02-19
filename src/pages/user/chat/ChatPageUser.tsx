@@ -60,17 +60,17 @@ const ChatPageUser = () => {
     const startOfToday = new Date(
       now.getFullYear(),
       now.getMonth(),
-      now.getDate()
+      now.getDate(),
     );
     const startOfMessageDay = new Date(
       date.getFullYear(),
       date.getMonth(),
-      date.getDate()
+      date.getDate(),
     );
 
     const diffDays = Math.floor(
       (startOfToday.getTime() - startOfMessageDay.getTime()) /
-        (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24),
     );
 
     const time = date.toLocaleTimeString([], {
@@ -93,7 +93,7 @@ const ChatPageUser = () => {
           chats.map((item, index) => (
             <div
               onClick={() => {
-                selectChat(item), socket?.emit("joinRoom", item.id);
+                (selectChat(item), socket?.emit("joinRoom", item.id));
               }}
               key={index}
               className="flex items-center gap-3 p-3 border-b border-gray-500"
@@ -109,14 +109,14 @@ const ChatPageUser = () => {
               <div className="flex flex-col">
                 <p className="text-2xl">
                   {item.users.map(
-                    (el) => el.user.id !== user?.id && el.user.name
+                    (el) => el.user.id !== user?.id && el.user.name,
                   )}
                 </p>
                 {selectedChat?.messages && (
                   <p className="text-xs">
                     {
-                      selectedChat.messages[selectedChat.messages.length - 1]
-                        .text
+                      selectedChat.messages[selectedChat.messages?.length - 1]
+                        ?.text
                     }
                   </p>
                 )}
