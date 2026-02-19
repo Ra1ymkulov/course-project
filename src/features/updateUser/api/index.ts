@@ -1,4 +1,4 @@
-import { USER_API } from "@/src/shared/api/user";
+import { USER_API } from "@/src/shared/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useUpdateProfile = () => {
@@ -12,6 +12,6 @@ export const useUpdateProfile = () => {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["user-edit"] });
       },
-    },
+    }
   );
 };
