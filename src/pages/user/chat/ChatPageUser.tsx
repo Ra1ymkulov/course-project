@@ -116,7 +116,7 @@ const ChatPageUser = () => {
                   <p className="text-xs">
                     {
                       selectedChat.messages[selectedChat.messages.length - 1]
-                        .text
+                        ?.text
                     }
                   </p>
                 )}
