@@ -132,7 +132,7 @@ const ChatPageUser = () => {
       <div className="flex flex-col">
         {selectedChat ? (
           <>
-            <div className="w-full h-full flex flex-col gap-3 overflow-y-auto border-b p-2">
+            <div className="w-full h-162 flex flex-col gap-3 overflow-y-auto border-b p-2 ">
               {selectedChat?.messages?.map((el) => (
                 <div
                   className={`
