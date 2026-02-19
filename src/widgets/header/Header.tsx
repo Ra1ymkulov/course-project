@@ -9,11 +9,11 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const hideHeader = pathname?.startsWith("/auth");
-  const userPathname = pathname?.startsWith("/user");
+
   const { data: user } = useGetUserQuery();
 
   return !hideHeader ? (
-    <header className={`${userPathname && "border-b border-gray-500"} py-5`}>
+    <header className={`${user && "border-b border-gray-500"} py-5`}>
       <div className="container">
         {user ? (
           <div className="flex items-center justify-between gap-4">
@@ -24,7 +24,7 @@ const Header = () => {
               Logo
             </h1>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-sm border border-gray-500 flex items-center justify-center">
+              <div onClick={() => router.push("/notification")} className="w-10 h-10 rounded-sm border border-gray-500 flex items-center justify-center">
                 <IoMdNotificationsOutline className="text-[23px] text-gray-500" />
               </div>
               {user.avatar ? (
@@ -59,12 +59,17 @@ const Header = () => {
               <p>Контакты</p>
             </nav>
             <div className="flex items-center gap-2.5">
-              <button className="py-2.5 px-5 font-medium text-base">
+              <button
+                className="py-2.5 px-5 font-medium text-base"
+                onClick={() => {
+                  router.push("/auth/login");
+                }}
+              >
                 Войти
               </button>
               <button
                 onClick={() => {
-                  router.push("/auth/login");
+                  router.push("/auth/register");
                 }}
                 className="button flex items-center gap-2.5"
               >

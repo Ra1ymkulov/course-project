@@ -10,10 +10,10 @@ type CourseCardProps = {
 const CourseCardUserComponents = ({ item }: CourseCardProps) => {
   const router = useRouter();
   return (
-    <div className="flex flex-col w-65 h-97 bg-gray-200 rounded-sm relative">
+    <div className="flex flex-col w-65 bg-gray-200 rounded-sm relative">
       {item.image ? (
         <img
-          className="w-full h-50 object-cover rounded-t-md"
+          className="w-full min-h-50 max-h-100 object-cover rounded-t-md"
           src={item.image}
         />
       ) : (
@@ -36,7 +36,7 @@ const CourseCardUserComponents = ({ item }: CourseCardProps) => {
               item.lessons && item.lessons.length > 0
                 ? item.lessons.reduce(
                     (total, lesson) => total + (lesson.videos?.length || 0),
-                    0
+                    0,
                   )
                 : 0
             } Уроков`}</span>
@@ -48,7 +48,7 @@ const CourseCardUserComponents = ({ item }: CourseCardProps) => {
         </div>
         <button
           className="flex items-center justify-center text-[#23A6F0] w-30 h-6 border border-[#23A6F0] rounded-2xl text-[10px]"
-          onClick={() => router.push("/marketing")}
+          onClick={() => router.push(`/course/${item.id}`)}
         >
           Узнать больше
           <IoIosArrowForward className="text-sm" />

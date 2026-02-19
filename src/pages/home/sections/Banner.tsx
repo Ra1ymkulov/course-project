@@ -2,6 +2,12 @@
 import Image from "next/image";
 
 const Banner = () => {
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <section className="py-15">
       <div className="container">
@@ -14,7 +20,12 @@ const Banner = () => {
               Обеспечьте сеть для всех ваших потребностей легко и весело,
               используя наши курсы.Откройте для себя интересные функции от нас.
             </p>
-            <button className="button w-1/2">Начать</button>
+            <button
+              className="button w-1/2"
+              onClick={() => scrollToSection("footer")}
+            >
+              Начать
+            </button>
           </div>
           <Image
             width={400}

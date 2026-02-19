@@ -36,7 +36,7 @@ const CourseCardComponents = ({ item }: CourseCardProps) => {
               item.lessons && item.lessons.length > 0
                 ? item.lessons.reduce(
                     (total, lesson) => total + (lesson.videos?.length || 0),
-                    0
+                    0,
                   )
                 : 0
             } Уроков`}</span>
@@ -48,7 +48,7 @@ const CourseCardComponents = ({ item }: CourseCardProps) => {
         </div>
         <button
           className="flex items-center justify-center text-[#23A6F0] w-48 h-11 border border-[#23A6F0] rounded-2xl"
-          onClick={() => router.push("/marketing")}
+          onClick={() => router.push(`/course/${item.id}`)}
         >
           Узнать больше
           <IoIosArrowForward className="text-lg" />

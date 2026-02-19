@@ -11,6 +11,7 @@ interface Course {
   createdAt: string;
   user?: User;
   lessons?: Lesson[];
+  video: Video[];
   category?: string;
   favoriteCourse?: FavoriteCourse[];
 }
