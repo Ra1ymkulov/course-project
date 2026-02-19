@@ -1,5 +1,7 @@
-import Banner from "./sections/Banner";
-import Lessons from "./sections/Lessons";
+"use client";
+import { useGetAllVideoQuery } from "@/src/entities/course/api/useCourse";
+import Banner from "../course/courseDetail/section/Banner";
+import Lessons from "../course/courseDetail/section/Lessons";
 
 const Marketing = () => {
   const course = {
@@ -167,6 +169,8 @@ const Marketing = () => {
       },
     ],
   };
+
+  const { data: course1 } = useGetAllVideoQuery();
 
   return (
     <div className="flex flex-col items-center gap-10">

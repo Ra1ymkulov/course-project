@@ -11,9 +11,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const { data: course } = useGetAllCoursesQuery();
   const setUser = useUserStore((state) => state.setUser);
   const setCourse = useCourseStore((state) => state.setCourse);
+  const userUpdate = useUserStore((state) => state.user);
   useEffect(() => {
     if (user) setUser(user);
-  }, [user]);
+  }, [user, userUpdate]);
   useEffect(() => {
     if (course) setCourse(course);
   }, [course]);

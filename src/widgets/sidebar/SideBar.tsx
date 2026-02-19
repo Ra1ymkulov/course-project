@@ -49,11 +49,17 @@ const SideBar = () => {
           <IoBookSharp />
           <p>Курсы</p>
         </div>
-        <div className="flex items-center gap-3 py-5 text-gray-500 w-full">
+        <div
+          onClick={() => router.push("/user/review")}
+          className="flex items-center gap-3 py-5 text-gray-500 w-full"
+        >
           <FaStar />
           <p>Оценить</p>
         </div>
-        <div className="flex items-center gap-3 py-5 text-gray-500 w-full">
+        <div
+          onClick={() => router.push("/user/setting")}
+          className="flex items-center gap-3 py-5 text-gray-500 w-full"
+        >
           <IoMdSettings />
           <p>Настройки</p>
         </div>

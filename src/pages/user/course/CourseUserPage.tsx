@@ -9,6 +9,7 @@ const CourseUserPage = () => {
   const course = useCourseStore((state) => state.course);
   const { data: category } = useGetAllCategoryQuery();
   const [state, setState] = useState<string>("all");
+
   const filtered =
     state === "all"
       ? course
@@ -17,6 +18,16 @@ const CourseUserPage = () => {
     <div className="mt-5 ml-5">
       <div className="flex flex-col items-center gap-10">
         <div className="flex items-center gap-5 pt-5">
+          <button
+            onClick={() => setState("all")}
+            className={
+              "all" === state
+                ? "button"
+                : "py-2.5 px-5 border border-gray-500 rounded-md"
+            }
+          >
+            Все
+          </button>
           {category?.map((item) => (
             <button
               key={item.id}
@@ -31,8 +42,8 @@ const CourseUserPage = () => {
             </button>
           ))}
         </div>
-        <div className="w-full h-140 overflow-x-auto overflow-y-hidden no-scrollbar">
-          <div className="flex gap-4 w-max ">
+        <div className="w-full">
+          <div className="grid grid-cols-3 gap-10 w-[90%] mx-auto pb-10">
             {filtered?.map((item) => (
               <CourseCardUserComponents item={item} key={item.id} />
             ))}

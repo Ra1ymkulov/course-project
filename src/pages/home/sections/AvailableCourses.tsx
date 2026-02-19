@@ -1,41 +1,8 @@
+import { useGetAllCoursesQuery } from "@/src/entities/course/api/useCourse";
 import CourseCardComponents from "@/src/shared/ui/course-card/CourseCardComponents";
 
 const AvailableCourses = () => {
-  const dataCourse = [
-    {
-      id: 1,
-      image: "/images/product-cover-76.svg",
-      name: "Как ставить о оценивать задачи",
-      description:
-        "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
-      timeLesson: "22ч 30мин",
-      lessons: 64,
-      progress: "Прогресс",
-      price: 1200,
-    },
-    {
-      id: 12,
-      image: "/images/product-cover-76.svg",
-      name: "Как ставить о оценивать задачи",
-      description:
-        "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
-      timeLesson: "22ч 30мин",
-      lessons: 64,
-      progress: "Прогресс",
-      price: 0,
-    },
-    {
-      id: 13,
-      image: "/images/product-cover-76.svg",
-      name: "Как ставить о оценивать задачи",
-      description:
-        "Мы ориентируемся на эргономику иты где работаешь. Это всего лишьнажатие клавиши.",
-      timeLesson: "22ч 30мин",
-      lessons: 64,
-      progress: "Прогресс",
-      price: 0,
-    },
-  ];
+  const { data: dataCourse } = useGetAllCoursesQuery();
   return (
     <div className="py-12">
       <div className="container">
@@ -48,7 +15,7 @@ const AvailableCourses = () => {
             </p>
           </div>
           <div className="flex items-start justify-between gap-2.5 py-5">
-            {dataCourse.map((item) => (
+            {dataCourse?.slice(0, 3).map((item) => (
               <CourseCardComponents item={item} key={item.id} />
             ))}
           </div>

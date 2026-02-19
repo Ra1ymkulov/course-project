@@ -1,53 +1,71 @@
+import { useGetReviewsQuery } from "@/src/entities/review/api";
 import ReviewCardComponents from "@/src/shared/ui/review-card/ReviewCardComponents";
-
+interface IType {
+  id: string;
+  userId: string;
+  text: string;
+  rating: number;
+  createdAt: string;
+}
 const ReviewCourse = () => {
-  const data = [
-    {
-      id: 1,
-      avatar: "/images/images.jpeg",
-      name: "Yessica Christy",
-      location: "Shanxi, China",
-      review: 4.7,
-      description:
-        "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
-    },
-    {
-      id: 2,
-      avatar: "/images/images.jpeg",
-      name: "Yessica Christy",
-      location: "Shanxi, China",
-      review: 4.7,
-      description:
-        "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
-    },
-    {
-      id: 3,
-      avatar: "/images/images.jpeg",
-      name: "Yessica Christy",
-      location: "Shanxi, China",
-      review: 4.7,
-      description:
-        "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
-    },
-    {
-      id: 4,
-      avatar: "/images/images.jpeg",
-      name: "Yessica Christy",
-      location: "Shanxi, China",
-      review: 4.7,
-      description:
-        "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
-    },
-    {
-      id: 5,
-      avatar: "/images/images.jpeg",
-      name: "Yessica Christy",
-      location: "Shanxi, China",
-      review: 4.7,
-      description:
-        "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
-    },
-  ];
+  // const data = [
+  //   {
+  //     id: 1,
+  //     avatar: "/images/images.jpeg",
+  //     name: "Yessica Christy",
+  //     location: "Shanxi, China",
+  //     review: 4.7,
+  //     description:
+  //       "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
+  //   },
+  //   {
+  //     id: 2,
+  //     avatar: "/images/images.jpeg",
+  //     name: "Yessica Christy",
+  //     location: "Shanxi, China",
+  //     review: 4.7,
+  //     description:
+  //       "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
+  //   },
+  //   {
+  //     id: 3,
+  //     avatar: "/images/images.jpeg",
+  //     name: "Yessica Christy",
+  //     location: "Shanxi, China",
+  //     review: 4.7,
+  //     description:
+  //       "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
+  //   },
+  //   {
+  //     id: 4,
+  //     avatar: "/images/images.jpeg",
+  //     name: "Yessica Christy",
+  //     location: "Shanxi, China",
+  //     review: 4.7,
+  //     description:
+  //       "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
+  //   },
+  //   {
+  //     id: 5,
+  //     avatar: "/images/images.jpeg",
+  //     name: "Yessica Christy",
+  //     location: "Shanxi, China",
+  //     review: 4.7,
+  //     description:
+  //       "Мне это нравится, потому что я люблю путешествовать далеко и все еще могу подключаться к высокой скорости.",
+  //   },
+  // ];
+
+  const { data } = useGetReviewsQuery();
+
+  if (!data) {
+    return (
+      <div className="container">
+        <h1>Нету отзывов или ошибка на сервере</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="py-12">
       <div className="container">
@@ -62,9 +80,13 @@ const ReviewCourse = () => {
             </p>
           </div>
           <div className="flex items-center gap-10 overflow-x-auto no-scrollbar">
-            <div className="flex items-center gap-12">
-              {data.map((item) => (
-                <ReviewCardComponents item={item} key={item.id} />
+            <div className="flex items-start gap-12">
+              {data.map((item: IType) => (
+                <ReviewCardComponents
+                  item={item}
+                  key={item.id}
+                  isPage={false}
+                />
               ))}
             </div>
           </div>

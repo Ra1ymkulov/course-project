@@ -11,7 +11,7 @@ const ChatPage = () => {
 
   return (
     <div>
-      ChatPage
+      <h1 className="text-3xl font-bold ">ChatPage</h1>
       <div>{userQuery?.name}</div>
       <div className="text-red-500">{user?.name}</div>
     </div>
