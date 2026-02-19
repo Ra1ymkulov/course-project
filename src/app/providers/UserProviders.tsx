@@ -14,7 +14,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const userUpdate = useUserStore((state) => state.user);
   useEffect(() => {
     if (user) setUser(user);
-  }, [user, userUpdate]);
+  }, [user]);
+
   useEffect(() => {
     if (course) setCourse(course);
   }, [course]);

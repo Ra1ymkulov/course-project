@@ -5,7 +5,7 @@ import Header from "../widgets/header/Header";
 import Footer from "../widgets/footer/Footer";
 import ReactQueryProviders from "./providers/ReactQueryProviders";
 import { UserProvider } from "./providers/UserProviders";
-import { useGetUserQuery } from "../entities/user/api/useApi";
+import { SocketProvider } from "./providers/SocketProvider";
 
 const montserrat = Montserrat();
 
@@ -24,11 +24,13 @@ export default function RootLayout({
       <body className={`${montserrat.className}`}>
         <ReactQueryProviders>
           <UserProvider>
-            <div className="layout">
-              <Header />
-              {children}
-              <Footer />
-            </div>
+            <SocketProvider>
+              <div className="layout">
+                <Header />
+                {children}
+                <Footer />
+              </div>
+            </SocketProvider>
           </UserProvider>
         </ReactQueryProviders>
       </body>
