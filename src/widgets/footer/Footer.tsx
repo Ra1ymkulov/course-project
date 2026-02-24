@@ -1,6 +1,12 @@
+"use client";
+import { usePathname } from "next/navigation";
+
 const Footer = () => {
-  return (
-    <footer className="pt-10">
+  const pathname = usePathname();
+  const hideFooter =
+    pathname?.startsWith("/auth") || pathname?.startsWith("/user");
+  return !hideFooter ? (
+    <footer className="pt-10" id="footer">
       <div className="flex flex-col ">
         <div className="flex flex-col text-center gap-2.5 items-center relative pb-20">
           <h1 className="text-4xl font-bold">Присоединяйся к нам</h1>
@@ -65,6 +71,8 @@ const Footer = () => {
         </div>
       </div>
     </footer>
+  ) : (
+    ""
   );
 };
 
